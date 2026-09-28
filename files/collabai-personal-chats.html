@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CollabAI · Personal chats</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#0A0807;--rail:#120e0d;--panel:#171211;--line:#2a2120;--text:#f6ece6;--mute:#a4958d;--mag:#D200D3;--magd:#940095;--peach:#FEE4D4;--pink:#FFB6C5;--aibg:#2a0f2b;--mine:#940095;--mine-t:#fff;--their:#241a19;--on-mag:#fff;--display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;--body:'Inter','Segoe UI',system-ui,sans-serif}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6;--mine:#D200D3;--their:#fdeee5}}
+:root[data-theme="light"]{--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6;--mine:#D200D3;--their:#fdeee5}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--body);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button,a{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-decoration:none}
+:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+h1,h2{font-family:var(--display)}
+.app{display:grid;grid-template-columns:64px 270px 1fr;height:100%}
+.rail{background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--mag);color:#fff;display:grid;place-items:center;font:700 18px var(--display)}
+.rail button{width:40px;height:40px;border-radius:12px;color:var(--mute);font-size:18px}
+.rail button:hover,.rail .on{background:var(--line);color:var(--text)}
+.list{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.list h2{font-size:18px;padding:16px 16px 8px}
+.search{margin:0 12px 8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--text);font:inherit;width:calc(100% - 24px)}
+.search:focus{outline:0;border-color:var(--mag)}
+.rows{overflow:auto;padding:4px 8px;display:flex;flex-direction:column;gap:2px}
+.row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;text-align:left;width:100%}
+.row:hover,.row.on{background:var(--line)}
+.row .n{font-weight:600;display:block;line-height:1.2}
+.row small{color:var(--mute);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.row .txt{min-width:0;flex:1}
+.ub{background:var(--mag);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:1px 7px}
+.newb{margin:0 12px 10px;background:var(--mag);color:#fff;border-radius:12px;padding:9px;font-weight:600;text-align:center}
+.newb:hover{background:var(--magd)}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;flex:none;position:relative}
+.av.on::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#3ddc97;border:2px solid var(--panel)}
+.aiav{background:linear-gradient(135deg,var(--mag),var(--magd))}
+.chat{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;align-items:center;gap:12px;padding:12px 24px;border-bottom:1px solid var(--line)}
+.top h1{font-size:17px;line-height:1.2}.top small{color:var(--mute)}
+.top .sp{flex:1}
+.top button{width:36px;height:36px;border-radius:10px;color:var(--mute)}.top button:hover{background:var(--line);color:var(--text)}
+.msgs{flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:6px}
+.day{align-self:center;color:var(--mute);font-size:12px;margin:8px 0}
+.b{max-width:min(560px,80%);padding:9px 14px;border-radius:16px;overflow-wrap:anywhere}
+.b time{display:block;font-size:11px;opacity:.65;margin-top:2px}
+.b.them{background:var(--their);border-bottom-left-radius:4px;align-self:flex-start}
+.b.mine{background:var(--mine);color:var(--mine-t);border-bottom-right-radius:4px;align-self:flex-end}
+.b.ai{background:var(--aibg);border:1px solid var(--magd);border-bottom-left-radius:4px;align-self:flex-start;max-width:min(640px,90%);padding:12px 16px}
+.b.ai .who{font-weight:600;font-size:12px;color:var(--pink);margin-bottom:4px}
+.b code{background:rgba(210,0,211,.2);padding:1px 5px;border-radius:5px;font-size:13px}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-x:auto;font-size:13px}
+.copy{margin-top:6px;font-size:12px;color:var(--mute)}.copy:hover{color:var(--text)}
+.empty{margin:auto;text-align:center;max-width:420px;padding:20px}
+.empty h2{font-size:22px;margin:10px 0 6px}.empty p{color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.chips button{border:1px solid var(--line);border-radius:99px;padding:7px 14px}
+.chips button:hover{border-color:var(--mag);background:var(--aibg)}
+form{display:flex;gap:8px;margin:0 24px 8px;padding:8px 8px 8px 16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+form:focus-within{border-color:var(--mag)}
+form input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit}
+form input:focus{outline:0}
+form button{background:var(--mag);color:#fff;border-radius:11px;padding:7px 16px;font-weight:600}
+form button:hover{background:var(--magd)}
+.hint{text-align:center;color:var(--mute);font-size:12px;margin-bottom:12px}
+.bnav{display:none}
+.pg{display:none}.pg.on{display:contents}
+@media (max-width:900px){
+.app{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}
+.rail{display:none}
+.pg.on{display:contents}
+.list{border-right:0;border-bottom:1px solid var(--line)}
+.list h2,.search{display:none}
+.newb{display:none}
+.rows{flex-direction:row;overflow-x:auto;padding:8px}
+.row{width:auto;flex:none}.row small{display:none}
+.bnav{display:flex;border-top:1px solid var(--line);background:var(--panel)}
+.bnav button{flex:1;padding:12px;color:var(--mute);font-weight:600}.bnav .on{color:var(--text);box-shadow:inset 0 2px var(--mag)}
+.top,.msgs{padding-left:16px;padding-right:16px}form{margin:0 16px 8px}
+.b{max-width:88%}
+}
+@media (prefers-reduced-motion:no-preference){.b.new{animation:pop .2s ease-out}@keyframes pop{from{opacity:0;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="Main"><span class="logo">C</span>
+    <button class="on" data-go="dm" aria-label="Direct messages">💬</button>
+    <button data-go="ai" aria-label="Personal AI">✦</button>
+  </nav>
+
+  <!-- ONE-TO-ONE CHAT -->
+  <div class="pg on" id="pg-dm">
+    <aside class="list">
+      <h2>Messages</h2>
+      <input class="search" placeholder="Search people" aria-label="Search people">
+      <div class="rows" id="people"></div>
+    </aside>
+    <section class="chat">
+      <header class="top"><span class="av on" id="dmav"></span><div><h1 id="dmname"></h1><small id="dmsub"></small></div><span class="sp"></span><button aria-label="Search in chat">⌕</button><button aria-label="More">⋯</button></header>
+      <div class="msgs" id="dmmsgs"></div>
+      <form id="dmf"><input id="dmi" aria-label="Message"><button>Send</button></form>
+      <p class="hint">Enter to send. Only you and this person can see this chat.</p>
+    </section>
+  </div>
+
+  <!-- PERSONAL AI CHAT -->
+  <div class="pg" id="pg-ai">
+    <aside class="list">
+      <h2>Personal AI</h2>
+      <a class="newb" href="#" id="newai">+ New chat</a>
+      <div class="rows" id="convs"></div>
+    </aside>
+    <section class="chat">
+      <header class="top"><span class="av aiav">✦</span><div><h1 id="ainame"></h1><small>Private. Only you can see this conversation.</small></div><span class="sp"></span><button aria-label="Rename">✎</button><button aria-label="Delete conversation">🗑</button></header>
+      <div class="msgs" id="aimsgs"></div>
+      <form id="aif"><input id="aii" aria-label="Ask your AI" placeholder="Ask your AI anything"><button>Send</button></form>
+      <p class="hint">Your Personal AI is separate from your groups.</p>
+    </section>
+  </div>
+
+  <nav class="bnav"><button class="on" data-go="dm">Messages</button><button data-go="ai">Personal AI</button></nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const P={Arjun:{i:'AJ',c:'#4338ca',on:1,sub:'Online',m:[['t','Did you push the login page?','09:40'],['m','Yes, check the feature/arman-auth branch.','09:42'],['t','Perfect, I will review it after lunch.','09:43']]},
+Rahul:{i:'RA',c:'#0f766e',on:1,sub:'Online',m:[['t','Documentation draft is ready.','Yesterday'],['m','Great, I will read it tonight.','Yesterday']]},
+Priya:{i:'PR',c:'#be185d',on:0,sub:'Last seen 2 hours ago',m:[]}};
+const C={'React Questions':[['m','What is the difference between state and props?'],['a','<code>props</code> are passed down from a parent and are read-only. <code>state</code> belongs to the component and can change.<pre>const [count, setCount] = useState(0);</pre>Changing state re-renders the component.']],
+'Python Learning':[],'Project Ideas':[],'Interview Preparation':[]};
+let dm='Arjun',ai='React Questions';
+const chips=['Explain this concept simply','Help me plan my week','Review my project idea','Quiz me on Python'];
+
+function bub(t,txt,time,anim){return `<div class="b ${t} ${anim?'new':''}">${t=='ai'?'<div class="who">CollabAI</div>':''}${t=='ai'?txt:esc(txt)}${time?`<time>${time}</time>`:''}${t=='ai'?'<button class="copy" type="button">Copy</button>':''}</div>`}
+function drawPeople(){$('#people').innerHTML=Object.entries(P).map(([n,p])=>`<button class="row ${n==dm?'on':''}" data-p="${n}"><span class="av ${p.on?'on':''}" style="background:${p.c}">${p.i}</span><span class="txt"><span class="n">${n}</span><small>${p.m.length?esc(p.m[p.m.length-1][1]):'Say hello'}</small></span>${n=='Rahul'&&dm!='Rahul'?'<span class="ub">1</span>':''}</button>`).join('');
+ $$('#people .row').forEach(b=>b.onclick=()=>{dm=b.dataset.p;showDM()})}
+function showDM(){const p=P[dm];drawPeople();$('#dmav').textContent=p.i;$('#dmav').style.background=p.c;$('#dmav').className='av '+(p.on?'on':'');
+ $('#dmname').textContent=dm;$('#dmsub').textContent=p.sub;$('#dmi').placeholder='Message '+dm;
+ $('#dmmsgs').innerHTML=p.m.length?'<div class="day">Today</div>'+p.m.map(m=>bub(m[0]=='m'?'mine':'them',m[1],m[2])).join(''):`<div class="empty"><h2>Start your chat with ${dm}</h2><p>Messages here are just between the two of you.</p></div>`;$('#dmmsgs').scrollTop=1e5}
+function drawConvs(){$('#convs').innerHTML=Object.keys(C).map(k=>`<button class="row ${k==ai?'on':''}" data-c="${k}"><span class="txt"><span class="n">${k}</span><small>${C[k].length?'Private chat':'No messages yet'}</small></span></button>`).join('');
+ $$('#convs .row').forEach(b=>b.onclick=()=>{ai=b.dataset.c;showAI()})}
+function showAI(){drawConvs();$('#ainame').textContent=ai;const l=C[ai];
+ $('#aimsgs').innerHTML=l.length?l.map(m=>m[0]=='m'?bub('mine',m[1]):bub('ai',m[1])).join(''):`<div class="empty"><span class="av aiav" style="margin:auto;width:48px;height:48px;font-size:20px">✦</span><h2>What can I help with?</h2><p>Ask anything. This chat is private to you.</p><div class="chips">${chips.map(c=>`<button type="button">${c}</button>`).join('')}</div></div>`;
+ $$('.chips button').forEach(b=>b.onclick=()=>{$('#aii').value=b.textContent;$('#aii').focus()});$('#aimsgs').scrollTop=1e5}
+$('#dmf').onsubmit=e=>{e.preventDefault();const v=$('#dmi').value.trim();if(!v)return;P[dm].m.push(['m',v,'Now']);$('#dmi').value='';showDM()};
+$('#aif').onsubmit=e=>{e.preventDefault();const v=$('#aii').value.trim();if(!v)return;C[ai].push(['m',v]);C[ai].push(['a','Design preview only. The real answer will come from the AI backend.']);$('#aii').value='';showAI()};
+$('#newai').onclick=e=>{e.preventDefault();let n='New chat',i=1;while(C[n])n='New chat '+(++i);C[n]=[];ai=n;showAI()};
+document.addEventListener('click',e=>{if(e.target.classList.contains('copy')){navigator.clipboard&&navigator.clipboard.writeText(e.target.parentElement.innerText).catch(()=>{});e.target.textContent='Copied'}});
+$$('[data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go;$$('[data-go]').forEach(x=>x.classList.toggle('on',x.dataset.go==g));$('#pg-dm').classList.toggle('on',g=='dm');$('#pg-ai').classList.toggle('on',g=='ai')});
+showDM();showAI();
+</script>
+</body>
+</html>

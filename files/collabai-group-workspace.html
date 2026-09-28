@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CollabAI · Project Team</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#0A0807;--rail:#120e0d;--panel:#171211;--line:#2a2120;--text:#f6ece6;--mute:#a4958d;--mag:#D200D3;--magd:#940095;--peach:#FEE4D4;--pink:#FFB6C5;--aibg:#2a0f2b;--me:#241a19;--on-mag:#fff;--display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;--body:'Inter','Segoe UI',system-ui,sans-serif}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6;--me:#fdeee5}}
+:root[data-theme="light"]{--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6;--me:#fdeee5}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--body);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+.app{display:grid;grid-template-columns:64px 250px 1fr;height:100%}
+.rail{background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--mag);color:var(--on-mag);display:grid;place-items:center;font:700 18px var(--display)}
+.rail button{width:40px;height:40px;border-radius:12px;color:var(--mute);font-size:18px}
+.rail button:hover,.rail .on{background:var(--line);color:var(--text)}
+.rail .sp{flex:1}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.side h2{font:700 17px var(--display);padding:0 8px 10px}
+.newg{background:var(--mag);color:var(--on-mag);border-radius:10px;padding:9px 12px;font-weight:600;margin-bottom:12px}
+.newg:hover{background:var(--magd)}
+.side h3{font-size:12px;font-weight:600;color:var(--mute);padding:12px 8px 4px}
+.item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;color:var(--mute);text-align:left;width:100%}
+.item:hover{background:var(--line);color:var(--text)}
+.item.on{background:var(--line);color:var(--text);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:#3ddc97;margin-left:auto}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px 8px 0;border-top:1px solid var(--line)}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:none}
+main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.top .g{width:38px;height:38px;border-radius:11px;background:var(--peach);color:var(--magd);display:grid;place-items:center;font:700 14px var(--display)}
+.top h1{font:700 18px/1.2 var(--display)}
+.top small{color:var(--mute)}
+.stack{margin-left:auto;display:flex}
+.stack .av{border:2px solid var(--bg);margin-left:-8px}
+.tabs{display:none;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;padding:12px;color:var(--mute);border-bottom:2px solid transparent;font-weight:600}
+.tabs .on{color:var(--text);border-color:var(--mag)}
+.split{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0}
+.pane{display:flex;flex-direction:column;min-height:0;min-width:0}
+.pane+.pane{border-left:1px solid var(--line);background:var(--panel)}
+.ph{padding:12px 20px 0}
+.ph h2{font:700 15px var(--display)}
+.ph p{color:var(--mute);font-size:12.5px}
+.sec{display:flex;gap:6px;overflow-x:auto;padding:10px 20px;border-bottom:1px solid var(--line)}
+.sec button{padding:5px 12px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap;font-size:13px}
+.sec button:hover{color:var(--text)}
+.sec .on{background:var(--mag);border-color:var(--mag);color:var(--on-mag);font-weight:600}
+.msgs{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:16px}
+.m{display:flex;gap:10px;max-width:100%}
+.m b{font-weight:600}
+.m time{color:var(--mute);font-size:12px;margin-left:6px}
+.m .t{min-width:0}
+.m .t p{margin-top:2px;overflow-wrap:anywhere}
+.ai .t{background:var(--aibg);border:1px solid var(--magd);border-radius:4px 14px 14px 14px;padding:10px 14px}
+.ai .av{background:var(--mag)}
+.ai code{background:rgba(210,0,211,.18);padding:1px 5px;border-radius:5px;font-size:12.5px}
+.empty{margin:auto;text-align:center;color:var(--mute);max-width:280px}
+.empty strong{display:block;color:var(--text);font:700 16px var(--display);margin-bottom:4px}
+form{display:flex;gap:8px;margin:0 20px 16px;padding:8px 8px 8px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+form:focus-within{border-color:var(--mag)}
+input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit}
+input:focus{outline:0}
+form button{background:var(--mag);color:var(--on-mag);border-radius:10px;padding:6px 14px;font-weight:600}
+form button:hover{background:var(--magd)}
+.menu{display:none}
+@media (max-width:900px){
+.app{grid-template-columns:1fr}
+.rail,.side{display:none}
+.tabs{display:flex}
+.split{grid-template-columns:1fr}
+.pane{display:none}
+.pane.show{display:flex}
+.pane+.pane{border-left:0}
+.top{padding:12px 16px}
+.msgs,.sec{padding-left:16px;padding-right:16px}
+form{margin:0 16px 12px}
+}
+@media (prefers-reduced-motion:no-preference){.m.new{animation:in .25s ease-out}@keyframes in{from{opacity:0;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="Main">
+    <div class="logo">C</div>
+    <button aria-label="Dashboard">⌂</button>
+    <button class="on" aria-label="Groups">👥</button>
+    <button aria-label="Personal AI">✦</button>
+    <span class="sp"></span>
+    <button aria-label="Settings">⚙</button>
+  </nav>
+  <aside class="side" aria-label="Groups">
+    <h2>CollabAI</h2>
+    <button class="newg">+ Create group</button>
+    <button class="item">✦ Personal AI</button>
+    <h3>Your groups</h3>
+    <button class="item on"># Project Team <span class="dot" title="Active now"></span></button>
+    <button class="item"># Study Group</button>
+    <button class="item"># Research Circle</button>
+    <h3>Members · 4</h3>
+    <div class="item"><span class="av" style="background:#c2410c">AR</span>Arman · owner</div>
+    <div class="item"><span class="av" style="background:#0f766e">SK</span>Saniya</div>
+    <div class="item"><span class="av" style="background:#4338ca">RA</span>Rahul</div>
+    <div class="item"><span class="av" style="background:#be185d">PR</span>Priya</div>
+    <div class="me"><span class="av" style="background:#c2410c">AR</span>Arman<span style="margin-left:auto;color:var(--mute)">Profile</span></div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div class="g">PT</div>
+      <div><h1>Project Team</h1><small>4 members · invite code CLB-4821</small></div>
+      <div class="stack" aria-hidden="true"><span class="av" style="background:#c2410c">AR</span><span class="av" style="background:#0f766e">SK</span><span class="av" style="background:#4338ca">RA</span><span class="av" style="background:#be185d">PR</span></div>
+    </header>
+    <div class="tabs" role="tablist">
+      <button class="on" data-p="chat" role="tab">Group Chat</button>
+      <button data-p="ai" role="tab">Group AI</button>
+    </div>
+    <div class="split">
+      <section class="pane show" id="chat" aria-label="Group chat">
+        <div class="ph"><h2># Group Chat</h2><p>Talk with your teammates. Only people in this group see it.</p></div>
+        <div class="msgs" style="padding-top:12px">
+          <div class="m"><span class="av" style="background:#c2410c">AR</span><div class="t"><b>Arman</b><time>10:02</time><p>Let's start the database design today.</p></div></div>
+          <div class="m"><span class="av" style="background:#0f766e">SK</span><div class="t"><b>Saniya</b><time>10:04</time><p>Okay, I'll work on the group UI.</p></div></div>
+          <div class="m"><span class="av" style="background:#4338ca">RA</span><div class="t"><b>Rahul</b><time>10:06</time><p>I'll prepare the documentation.</p></div></div>
+          <div class="m"><span class="av" style="background:#be185d">PR</span><div class="t"><b>Priya</b><time>10:09</time><p>I'll test the join flow once it's ready. Check the Backend section in Group AI for the auth notes.</p></div></div>
+        </div>
+        <form id="f1"><input aria-label="Message Project Team" placeholder="Message Project Team"><button>Send</button></form>
+      </section>
+
+      <section class="pane" id="ai" aria-label="Group AI">
+        <div class="ph"><h2>✦ Group AI</h2><p>One AI conversation the whole group can see, split by topic.</p></div>
+        <div class="sec" id="secs" role="tablist"></div>
+        <div class="msgs" id="aimsgs"></div>
+        <form id="f2"><input aria-label="Ask the group AI" placeholder="Ask the group AI"><button>Ask AI</button></form>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+const S={General:[["u","Arman","AR","#c2410c","What should we finish first for the MVP?"],["a","","","","Start with authentication and profile, then create/join group. Group chat and Group AI both depend on group membership, so they come next."]],
+Frontend:[["u","Saniya","SK","#0f766e","How should we structure our React project?"],["a","","","","Use a feature-based layout: <code>features/groups</code>, <code>features/member-chat</code>, <code>features/group-ai</code>, with shared components in <code>components/</code>."]],
+Backend:[["u","Arman","AR","#c2410c","How do we check group access before calling the AI?"],["a","","","","Verify the token, confirm the user is in <code>group_members</code>, validate the section, then save the message and call the AI provider."],["u","Priya","PR","#be185d","Should the frontend send the sender id?"],["a","","","","No. The backend reads it from the logged-in user."]],
+Database:[],Testing:[],Research:[]};
+const secs=document.getElementById('secs'),box=document.getElementById('aimsgs');let cur='General';
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function row(m,anim){const d=document.createElement('div');d.className='m '+(m[0]=='a'?'ai':'')+(anim?' new':'');
+d.innerHTML=m[0]=='a'?`<span class="av">AI</span><div class="t"><b>CollabAI</b><p>${m[4]}</p></div>`:`<span class="av" style="background:${m[3]}">${m[2]}</span><div class="t"><b>${m[1]}</b><p>${esc(m[4])}</p></div>`;return d}
+function show(){box.innerHTML='';const l=S[cur];if(!l.length){box.innerHTML=`<div class="empty"><strong>No questions in ${cur} yet</strong>Ask the AI something and your whole group will see it here.</div>`;return}l.forEach(m=>box.append(row(m)));box.scrollTop=1e5}
+Object.keys(S).forEach(k=>{const b=document.createElement('button');b.textContent=k;b.setAttribute('role','tab');if(k==cur)b.className='on';b.onclick=()=>{cur=k;[...secs.children].forEach(x=>x.className=x==b?'on':'');show()};secs.append(b)});show();
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x==b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('show',p.id==b.dataset.p))});
+document.getElementById('f1').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input'),v=i.value.trim();if(!v)return;const p=document.querySelector('#chat .msgs');p.append(row(['u','Arman','AR','#c2410c',v],1));p.scrollTop=1e5;i.value=''};
+document.getElementById('f2').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input'),v=i.value.trim();if(!v)return;S[cur].push(['u','Arman','AR','#c2410c',v]);S[cur].push(['a','','','','This is a design preview, so the AI reply is a placeholder. The real answer comes from the backend.']);i.value='';show()};
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CollabAI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#0A0807;--rail:#120e0d;--panel:#171211;--line:#2a2120;--text:#f6ece6;--mute:#a4958d;--mag:#D200D3;--magd:#940095;--peach:#FEE4D4;--pink:#FFB6C5;--aibg:#2a0f2b;--on-mag:#fff;--display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;--body:'Inter','Segoe UI',system-ui,sans-serif}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6}}
+:root[data-theme="light"]{--bg:#fff7f2;--rail:#FEE4D4;--panel:#fffaf7;--line:#f0cdbb;--text:#1c1210;--mute:#7b6459;--aibg:#fbe0f6}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--body);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button,a{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-decoration:none}
+:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+.page{display:none;height:100%}.page.on{display:block}
+.btn{display:inline-block;background:var(--mag);color:var(--on-mag);border-radius:12px;padding:10px 20px;font-weight:600}
+.btn:hover{background:var(--magd)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{background:var(--line)}
+h1,h2,h3{font-family:var(--display)}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:none}
+/* landing */
+#landing{overflow:auto}
+.nav{display:flex;align-items:center;gap:20px;padding:16px clamp(16px,5vw,64px)}
+.brand{font:700 20px var(--display);display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--mag);color:#fff;display:grid;place-items:center}
+.nav .sp{flex:1}
+.hero{padding:clamp(40px,8vw,96px) clamp(16px,5vw,64px);display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;background:radial-gradient(circle at 85% 20%,rgba(255,182,197,.22),transparent 55%)}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-.02em}
+.hero p{color:var(--mute);font-size:18px;max-width:46ch;margin:20px 0 28px}
+.hero .row{display:flex;gap:12px;flex-wrap:wrap}
+.prev{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.bub{padding:9px 13px;border-radius:14px;max-width:88%}
+.bub.h{background:var(--line)}.bub.a{background:var(--aibg);border:1px solid var(--magd);align-self:flex-end}
+.sect{padding:56px clamp(16px,5vw,64px)}
+.sect h2{font-size:clamp(26px,4vw,40px);margin-bottom:28px;max-width:20ch}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.card h3{font-size:18px;margin-bottom:6px}.card p{color:var(--mute)}
+.card .tag{display:inline-block;font-size:12px;border-radius:99px;padding:2px 10px;background:var(--aibg);border:1px solid var(--magd);margin-bottom:12px}
+.cta{margin:0 clamp(16px,5vw,64px) 40px;border-radius:24px;background:var(--peach);color:#1c1210;padding:44px;text-align:center}
+.cta h2{font-size:clamp(26px,4vw,38px);margin-bottom:16px}
+.foot{padding:24px clamp(16px,5vw,64px) 40px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+/* auth */
+#auth{display:none;place-items:center;padding:20px;background:radial-gradient(circle at 50% 0,rgba(255,182,197,.2),transparent 60%)}
+#auth.on{display:grid}
+.box{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:32px}
+.box h1{font-size:28px;margin:18px 0 4px}.box>p{color:var(--mute);margin-bottom:20px}
+label{display:block;font-weight:500;margin:14px 0 6px}
+.fld{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--text);font:inherit}
+.fld:focus{outline:0;border-color:var(--mag)}
+.box .btn{width:100%;margin-top:22px;text-align:center}
+.box .sm{display:flex;justify-content:space-between;margin-top:14px;color:var(--mute)}
+.box .sm a{color:var(--pink);font-weight:500}
+.reg{display:none}.isreg .reg{display:block}
+/* app shell */
+.app{display:none;grid-template-columns:64px 250px 1fr;height:100%}
+.app.on{display:grid}
+.rail{background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0}
+.rail .logo{width:40px;height:40px;font-size:18px}
+.rail a{width:40px;height:40px;border-radius:12px;color:var(--mute);display:grid;place-items:center;font-size:18px}
+.rail a:hover,.rail a.on{background:var(--line);color:var(--text)}
+.rail .sp{flex:1}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:2px;overflow:auto}
+.side h2{font-size:17px;padding:0 8px 12px}
+.side h3{font:600 12px var(--body);color:var(--mute);padding:14px 8px 4px}
+.item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;color:var(--mute)}
+.item:hover,.item.on{background:var(--line);color:var(--text)}.item.on{font-weight:600}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px 8px 0;border-top:1px solid var(--line)}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;height:100%}
+.view{display:none;flex:1;min-height:0}.view.on{display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--line)}
+.top h1{font-size:19px}.top small{color:var(--mute)}.top .btn{margin-left:auto;padding:8px 16px}
+.scroll{overflow:auto;padding:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin:12px 0 28px}
+.grp{display:flex;flex-direction:column;gap:8px}
+.grp .gi{width:40px;height:40px;border-radius:12px;background:var(--peach);color:var(--magd);display:grid;place-items:center;font:700 14px var(--display)}
+.pai{display:flex;gap:16px;align-items:center;background:var(--aibg);border:1px solid var(--magd)}
+.act{display:flex;flex-direction:column}
+.act div{padding:10px 0;border-bottom:1px solid var(--line);color:var(--mute)}.act b{color:var(--text);font-weight:600}
+/* chat */
+.cols{flex:1;display:grid;grid-template-columns:240px 1fr;min-height:0}
+.convs{border-right:1px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:2px;overflow:auto}
+.convs .btn{margin-bottom:10px;text-align:center}
+.cv{padding:8px 10px;border-radius:8px;color:var(--mute);text-align:left}
+.cv:hover,.cv.on{background:var(--line);color:var(--text)}.cv.on{font-weight:600}
+.chat{display:flex;flex-direction:column;min-height:0;min-width:0}
+.msgs{flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.m{display:flex;gap:10px}.m .t{min-width:0}.m b{font-weight:600}.m time{color:var(--mute);font-size:12px;margin-left:6px}.m p{overflow-wrap:anywhere}
+.ai .t{background:var(--aibg);border:1px solid var(--magd);border-radius:4px 14px 14px 14px;padding:10px 14px}
+.ai .av{background:var(--mag)}
+.ai code{background:rgba(210,0,211,.18);padding:1px 5px;border-radius:5px}
+form{display:flex;gap:8px;margin:0 24px 16px;padding:8px 8px 8px 14px;border:1px solid var(--line);border-radius:14px}
+form:focus-within{border-color:var(--mag)}
+form input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit}
+form input:focus{outline:0}
+form button{background:var(--mag);color:#fff;border-radius:10px;padding:6px 14px;font-weight:600}
+.bnav{display:none}
+@media (max-width:900px){
+.hero,.three{grid-template-columns:1fr}
+.app{grid-template-columns:1fr;grid-template-rows:1fr auto}
+.rail,.side{display:none}
+.bnav{display:flex;border-top:1px solid var(--line);background:var(--panel)}
+.bnav a{flex:1;text-align:center;padding:12px 4px;color:var(--mute);font-size:12px}
+.bnav a.on{color:var(--text);font-weight:600}
+.cols{grid-template-columns:1fr}
+.convs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}
+.convs .btn{margin:0;white-space:nowrap;padding:6px 12px}.cv{white-space:nowrap}
+.top,.scroll,.msgs{padding-left:16px;padding-right:16px}form{margin:0 16px 12px}
+.cta{padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="page" id="landing">
+  <header class="nav"><a class="brand" href="#landing"><span class="logo">C</span>CollabAI</a><span class="sp"></span><a class="btn ghost" href="#login">Log in</a><a class="btn" href="#register">Sign up</a></header>
+  <section class="hero">
+    <div>
+      <h1>Work together. Think together. Build together.</h1>
+      <p>A shared workspace where your team can collaborate with each other and AI, all in one place.</p>
+      <div class="row"><a class="btn" href="#register">Create your workspace</a><a class="btn ghost" href="#login">Log in</a></div>
+    </div>
+    <div class="prev" aria-hidden="true">
+      <div class="bub h"><b>Arman</b> How should we structure our React project?</div>
+      <div class="bub a"><b>CollabAI</b> Use a feature-based layout so each feature owns its own folder.</div>
+      <div class="bub h"><b>Saniya</b> Got it, I can see this too. Starting on the group UI.</div>
+    </div>
+  </section>
+  <section class="sect">
+    <h2>Three places to talk, each with one job</h2>
+    <div class="three">
+      <div class="card"><span class="tag">Only you</span><h3>Personal AI</h3><p>A private space for questions, learning and brainstorming. Keep as many conversations as you need.</p></div>
+      <div class="card"><span class="tag">Your group</span><h3>Group chat</h3><p>Realtime messages between the people in your group.</p></div>
+      <div class="card"><span class="tag">Shared</span><h3>Group AI</h3><p>One AI conversation the whole group sees, split into Frontend, Backend, Database and more, so nothing gets lost.</p></div>
+    </div>
+  </section>
+  <section class="sect"><h2>Get started in three steps</h2>
+    <div class="three">
+      <div class="card"><h3>1. Create a group</h3><p>Name it and share the invite code.</p></div>
+      <div class="card"><h3>2. Invite your team</h3><p>Members join with the code and appear in the group.</p></div>
+      <div class="card"><h3>3. Ask together</h3><p>Chat with people, and ask the AI in the section that fits.</p></div>
+    </div></section>
+  <div class="cta"><h2>Bring your team and your AI into one place</h2><a class="btn" style="background:#0A0807" href="#register">Sign up free</a></div>
+  <footer class="foot"><span>© CollabAI</span><span>Built by Arman and Saniya</span></footer>
+</div>
+
+<div class="page" id="auth">
+  <div class="box" id="abox">
+    <a class="brand" href="#landing"><span class="logo">C</span>CollabAI</a>
+    <h1 id="atitle">Welcome back</h1><p id="asub">Log in to your workspace.</p>
+    <div class="reg"><label for="n">Full name</label><input class="fld" id="n" autocomplete="name"></div>
+    <label for="e">Email</label><input class="fld" id="e" type="email" autocomplete="email">
+    <label for="p">Password</label><input class="fld" id="p" type="password" autocomplete="current-password">
+    <a class="btn" id="abtn" href="#dashboard">Log in</a>
+    <div class="sm"><a href="#login" id="forgot" style="color:var(--mute)">Forgot password?</a><span id="swap">No account? <a href="#register">Sign up</a></span></div>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <nav class="rail" aria-label="Main"><span class="logo">C</span>
+    <a href="#dashboard" data-n="dashboard" aria-label="Dashboard">⌂</a><a href="#dashboard" aria-label="Groups">👥</a><a href="#personal-ai" data-n="personal-ai" aria-label="Personal AI">✦</a><a href="#chat" data-n="chat" aria-label="Direct chat">💬</a><span class="sp"></span><a href="#landing" aria-label="Log out">⎋</a></nav>
+  <aside class="side">
+    <h2>CollabAI</h2>
+    <a class="item" href="#dashboard" data-n="dashboard">Dashboard</a>
+    <a class="item" href="#personal-ai" data-n="personal-ai">✦ Personal AI</a>
+    <h3>Groups</h3>
+    <a class="item" href="#dashboard"># Project Team</a><a class="item" href="#dashboard"># Study Group</a>
+    <h3>Direct messages</h3>
+    <a class="item" href="#chat" data-n="chat">Arjun</a><a class="item" href="#chat">Rahul</a>
+    <div class="me"><span class="av" style="background:#c2410c">AR</span>Arman<span style="margin-left:auto;color:var(--mute)">Profile</span></div>
+  </aside>
+  <div class="main">
+    <section class="view" id="v-dashboard">
+      <header class="top"><div><h1>Good morning, Arman</h1><small>Here is what your groups are up to.</small></div><button class="btn">+ Create group</button></header>
+      <div class="scroll">
+        <h3>Your groups</h3>
+        <div class="grid">
+          <div class="card grp"><span class="gi">PT</span><h3>Project Team</h3><p>4 members · 3 new AI answers</p></div>
+          <div class="card grp"><span class="gi">SG</span><h3>Study Group</h3><p>6 members · 12 new messages</p></div>
+          <div class="card grp"><span class="gi">RC</span><h3>Research Circle</h3><p>3 members · no new activity</p></div>
+        </div>
+        <a class="card pai" href="#personal-ai"><div style="flex:1"><h3>Your Personal AI</h3><p>Private conversations only you can see.</p></div><span class="btn">Open</span></a>
+        <h3 style="margin-top:28px">Recent activity</h3>
+        <div class="act"><div><b>Saniya</b> asked in Project Team · Frontend</div><div><b>CollabAI</b> answered in Project Team · Backend</div><div><b>Rahul</b> joined Study Group</div></div>
+      </div>
+    </section>
+    <section class="view" id="v-personal-ai">
+      <header class="top"><div><h1>✦ Personal AI</h1><small>Private. Only you can see these conversations.</small></div></header>
+      <div class="cols">
+        <div class="convs"><a class="btn" href="#personal-ai">+ New chat</a><button class="cv on">React Questions</button><button class="cv">Python Learning</button><button class="cv">Project Ideas</button><button class="cv">Interview Preparation</button></div>
+        <div class="chat">
+          <div class="msgs" id="pm">
+            <div class="m"><span class="av" style="background:#c2410c">AR</span><div class="t"><b>You</b><p>What is the difference between state and props?</p></div></div>
+            <div class="m ai"><span class="av">AI</span><div class="t"><b>CollabAI</b><p><code>props</code> are passed in from a parent and are read-only. <code>state</code> belongs to the component and can change.</p></div></div>
+          </div>
+          <form id="pf"><input aria-label="Ask your AI" placeholder="Ask your AI"><button>Send</button></form>
+        </div>
+      </div>
+    </section>
+    <section class="view" id="v-chat">
+      <header class="top"><span class="av" style="background:#4338ca">AJ</span><div><h1>Arjun</h1><small>Direct message · online</small></div></header>
+      <div class="chat" style="flex:1">
+        <div class="msgs" id="dm">
+          <div class="m"><span class="av" style="background:#4338ca">AJ</span><div class="t"><b>Arjun</b><time>09:40</time><p>Did you push the login page?</p></div></div>
+          <div class="m"><span class="av" style="background:#c2410c">AR</span><div class="t"><b>You</b><time>09:42</time><p>Yes, check the feature/arman-auth branch.</p></div></div>
+        </div>
+        <form id="df"><input aria-label="Message Arjun" placeholder="Message Arjun"><button>Send</button></form>
+      </div>
+    </section>
+  </div>
+  <nav class="bnav"><a href="#dashboard" data-n="dashboard">Home</a><a href="#personal-ai" data-n="personal-ai">Personal AI</a><a href="#chat" data-n="chat">Chat</a><a href="#landing">Log out</a></nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+function route(){
+  let h=location.hash.slice(1)||'landing';
+  const auth=h=='login'||h=='register', app=['dashboard','personal-ai','chat'].includes(h);
+  if(!auth&&!app)h='landing';
+  $('#landing').classList.toggle('on',h=='landing');$('#auth').classList.toggle('on',auth);$('#app').classList.toggle('on',app);
+  if(auth){const r=h=='register';$('#abox').classList.toggle('isreg',r);
+    $('#atitle').textContent=r?'Create your account':'Welcome back';$('#asub').textContent=r?'Start collaborating with your team and AI.':'Log in to your workspace.';
+    $('#abtn').textContent=r?'Create account':'Log in';$('#forgot').style.display=r?'none':'';
+    $('#swap').innerHTML=r?'Have an account? <a href="#login">Log in</a>':'No account? <a href="#register">Sign up</a>'}
+  if(app){$$('.view').forEach(v=>v.classList.toggle('on',v.id=='v-'+h));$$('[data-n]').forEach(a=>a.classList.toggle('on',a.dataset.n==h))}
+  scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function wire(f,box,reply){$(f).onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input'),v=i.value.trim();if(!v)return;
+  const m=$(box);m.insertAdjacentHTML('beforeend',`<div class="m"><span class="av" style="background:#c2410c">AR</span><div class="t"><b>You</b><p>${esc(v)}</p></div></div>`);
+  if(reply)m.insertAdjacentHTML('beforeend',`<div class="m ai"><span class="av">AI</span><div class="t"><b>CollabAI</b><p>Design preview only. The real reply will come from the backend.</p></div></div>`);
+  i.value='';m.scrollTop=1e5}}
+wire('#pf','#pm',1);wire('#df','#dm',0);
+</script>
+</body>
+</html>
