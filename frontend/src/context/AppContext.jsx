@@ -87,7 +87,7 @@ export function AppProvider({ children }) {
       type: "a",
       sender: "CollabAI",
       initials: "AI",
-      color: "#D200D3",
+      color: "#00D2B4",
       text: "This is a design preview answer. The real answer comes from the AI backend.",
     };
 

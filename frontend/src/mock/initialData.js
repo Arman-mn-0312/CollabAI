@@ -31,17 +31,17 @@ export const initialGroups = [
     aiTopics: {
       General: [
         { type: "u", sender: "Arman", initials: "AR", color: "#c2410c", text: "What should we finish first for the MVP?" },
-        { type: "a", sender: "CollabAI", initials: "AI", color: "#D200D3", text: "Start with authentication and profile, then create/join group. Group chat and Group AI both depend on group membership, so they come next." }
+        { type: "a", sender: "CollabAI", initials: "AI", color: "#00D2B4", text: "Start with authentication and profile, then create/join group. Group chat and Group AI both depend on group membership, so they come next." }
       ],
       Frontend: [
         { type: "u", sender: "Saniya", initials: "SK", color: "#0f766e", text: "How should we structure our React project?" },
-        { type: "a", sender: "CollabAI", initials: "AI", color: "#D200D3", text: "Use a feature-based layout: <code>features/groups</code>, <code>features/member-chat</code>, <code>features/group-ai</code>, with shared components in <code>components/</code>." }
+        { type: "a", sender: "CollabAI", initials: "AI", color: "#00D2B4", text: "Use a feature-based layout: <code>features/groups</code>, <code>features/member-chat</code>, <code>features/group-ai</code>, with shared components in <code>components/</code>." }
       ],
       Backend: [
         { type: "u", sender: "Arman", initials: "AR", color: "#c2410c", text: "How do we check group access before calling the AI?" },
-        { type: "a", sender: "CollabAI", initials: "AI", color: "#D200D3", text: "Verify the token, confirm the user is in <code>group_members</code>, validate the section, then save the message and call the AI provider." },
+        { type: "a", sender: "CollabAI", initials: "AI", color: "#00D2B4", text: "Verify the token, confirm the user is in <code>group_members</code>, validate the section, then save the message and call the AI provider." },
         { type: "u", sender: "Priya", initials: "PR", color: "#be185d", text: "Should the frontend send the sender id?" },
-        { type: "a", sender: "CollabAI", initials: "AI", color: "#D200D3", text: "No. The backend reads it from the logged-in user." }
+        { type: "a", sender: "CollabAI", initials: "AI", color: "#00D2B4", text: "No. The backend reads it from the logged-in user." }
       ],
       Database: [],
       Testing: [],
@@ -62,7 +62,7 @@ export const initialGroups = [
     aiTopics: {
       General: [
         { type: "u", sender: "Rahul", initials: "RA", color: "#4338ca", text: "Can you explain Big O notation simply?" },
-        { type: "a", sender: "CollabAI", initials: "AI", color: "#D200D3", text: "Big O notation describes how execution time or memory space scales relative to the input size <code>N</code>." }
+        { type: "a", sender: "CollabAI", initials: "AI", color: "#00D2B4", text: "Big O notation describes how execution time or memory space scales relative to the input size <code>N</code>." }
       ]
     }
   },
