@@ -1058,6 +1058,51 @@ pre {
   width: 100%;
   max-width: 420px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: var(--mute);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.join-requests-modal {
+  max-width: 560px;
+  max-height: min(680px, calc(100vh - 40px));
+  overflow: hidden;
+}
+
+.join-request-list {
+  display: grid;
+  gap: 12px;
+  max-height: 480px;
+  overflow-y: auto;
+  margin-top: 18px;
+  padding-right: 4px;
+}
+
+.join-request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.join-request small {
+  display: block;
+  color: var(--mute);
+}
+
+.join-request-actions {
+  display: flex;
+  gap: 8px;
 }
 
 /* Mobile Bottom Navigation */

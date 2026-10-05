@@ -26,3 +26,4 @@ frontend/.vite/
 
 # Backend
 backend/uploads/
+backend/.env.example/

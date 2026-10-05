@@ -2,7 +2,7 @@ import React from "react";
 import { useApp } from "../../context/AppContext";
 
 export function BottomNav() {
-  const { currentView, navigate } = useApp();
+  const { currentView, navigate, logout } = useApp();
 
   return (
     <nav className="bnav" aria-label="Mobile Navigation">
@@ -30,7 +30,7 @@ export function BottomNav() {
       >
         Chat
       </button>
-      <button onClick={() => navigate("landing")}>Log out</button>
+      <button onClick={() => void logout()}>Log out</button>
     </nav>
   );
 }

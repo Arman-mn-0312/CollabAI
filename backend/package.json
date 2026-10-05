@@ -1,0 +1,16 @@
+{
+  "name": "collabai-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node --env-file=.env src/server.js",
+    "dev": "node --env-file=.env --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@supabase/server": "^1.9.0",
+    "@supabase/supabase-js": "^2.57.0",
+    "express": "^5.1.0"
+  }
+}

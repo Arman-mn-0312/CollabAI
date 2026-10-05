@@ -52,14 +52,14 @@ export function AppSidebar() {
         );
       })}
 
-      {currentView === "group-workspace" && activeGroup?.members && (
+      {currentView === "group-workspace" && activeGroup?.members?.length > 0 && (
         <>
           <h3>Members · {activeGroup.members.length}</h3>
           {activeGroup.members.map((m) => (
             <div key={m.id || m.name} className="item">
               <Avatar initials={m.initials} color={m.color} />
               <span>
-                {m.name} {m.role ? `· ${m.role}` : ""}
+                {m.full_name || m.username || m.name || m.id} {m.role ? `· ${m.role}` : ""}
               </span>
             </div>
           ))}

@@ -1,0 +1,1 @@
+Apply the SQL migration in this directory with the Supabase CLI or SQL editor. The migration creates Direct Chat tables, participant-based RLS, the server-only conversation creation RPC, and adds `direct_messages` to `supabase_realtime`.

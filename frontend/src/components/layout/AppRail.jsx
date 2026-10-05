@@ -2,7 +2,7 @@ import React from "react";
 import { useApp } from "../../context/AppContext";
 
 export function AppRail() {
-  const { currentView, navigate, theme, toggleTheme } = useApp();
+  const { currentView, navigate, theme, toggleTheme, logout } = useApp();
 
   return (
     <nav className="rail" aria-label="Main navigation">
@@ -63,7 +63,9 @@ export function AppRail() {
       </button>
 
       <button
-        onClick={() => navigate("landing")}
+        onClick={() => {
+          void logout();
+        }}
         aria-label="Log out"
         title="Log out to landing"
       >
