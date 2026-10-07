@@ -14,7 +14,11 @@ function createApp({ supabase, config, repository = new DirectChatRepository(sup
 
   app.use((req, res, next) => {
     const origin = req.get("origin");
-    if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
+    const isLocalDevelopmentOrigin = origin && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+    const isConfiguredFrontendOrigin = origin && config.frontendUrl && origin === config.frontendUrl;
+    if (origin && (isLocalDevelopmentOrigin || isConfiguredFrontendOrigin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
     res.setHeader("Vary", "Origin");
     res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");

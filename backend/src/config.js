@@ -11,6 +11,7 @@ function getConfig(env = process.env) {
     supabaseUrl: env.SUPABASE_URL,
     supabaseServiceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY,
     maxMessageLength: Number(env.DIRECT_MESSAGE_MAX_LENGTH || 4000),
+    frontendUrl: env.FRONTEND_URL,
   };
 }
 
